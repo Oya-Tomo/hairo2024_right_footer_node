@@ -1,0 +1,3 @@
+[submodule "lib/sclp"]
+	path = lib/sclp
+	url = https://github.com/Oya-Tomo/sclp
