@@ -31,6 +31,12 @@ pico_sdk_init()
 
 add_executable(right_footer_node
         main.cpp
+        features/connection/connection.cpp
+        features/connection/context.cpp
+        features/drive/drive.cpp
+        features/flipper/flipper.cpp
+        features/ticker/ticker.cpp
+        utils/utils.cpp
         )
 
 add_subdirectory(lib/sclp)
