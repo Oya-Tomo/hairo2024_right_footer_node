@@ -35,9 +35,10 @@ static void i2c_slave_handler(i2c_inst_t *i2c, i2c_slave_event_t event)
 // I2C connection
 
 const uint8_t I2C_SLAVE_ADDRESS = 0x20;
+const uint32_t I2C_BAUDRATE = 100 * 1000;
 
 const uint I2C_SDA_PIN = 16;
-const uint I2C_SCL = 17;
+const uint I2C_SCL_PIN = 17;
 
 void connection_setup()
 {
@@ -45,11 +46,11 @@ void connection_setup()
     gpio_set_function(I2C_SDA_PIN, GPIO_FUNC_I2C);
     gpio_pull_up(I2C_SDA_PIN);
 
-    gpio_init(I2C_SCL);
-    gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
-    gpio_pull_up(I2C_SCL);
+    gpio_init(I2C_SCL_PIN);
+    gpio_set_function(I2C_SCL_PIN, GPIO_FUNC_I2C);
+    gpio_pull_up(I2C_SCL_PIN);
 
-    i2c_init(i2c0, 100 * 1000);
+    i2c_init(i2c0, I2C_BAUDRATE);
     i2c_slave_init(i2c0, I2C_SLAVE_ADDRESS, &i2c_slave_handler);
 }
 
