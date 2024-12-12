@@ -83,9 +83,9 @@ PID::config_t back_belt_pid_config = {
 
 void drive_callback_register(uint gpio, uint32_t events)
 {
-    center_belt_qei.configure(center_belt_qei_config);
-    front_belt_qei.configure(front_belt_qei_config);
-    back_belt_qei.configure(back_belt_qei_config);
+    center_belt_qei.callback_register(gpio, events);
+    front_belt_qei.callback_register(gpio, events);
+    back_belt_qei.callback_register(gpio, events);
 }
 
 void drive_setup()
