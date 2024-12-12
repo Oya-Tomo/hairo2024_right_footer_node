@@ -57,8 +57,8 @@ PID::config_t back_flipper_pid_config = {
 
 void flipper_callback_register(uint gpio, uint32_t events)
 {
-    front_flipper_qei.configure(front_flipper_qei_config);
-    back_flipper_qei.configure(back_flipper_qei_config);
+    front_flipper_qei.callback_register(gpio, events);
+    back_flipper_qei.callback_register(gpio, events);
 }
 
 void flipper_setup()
