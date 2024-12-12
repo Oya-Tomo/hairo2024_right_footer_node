@@ -34,8 +34,8 @@ typedef struct
 
 typedef struct
 {
-    float front_angle; // degree (-90.0 ~ 90.0)
-    float back_angle;  // degree (-90.0 ~ 90.0)
+    float front_angle; // degree (-PI/2 ~ PI/2)
+    float back_angle;  // degree (-PI/2 ~ PI/2)
 } flipper_state_t;
 
 system_state_t convert_to_system_state_t(uint8_t *data);
