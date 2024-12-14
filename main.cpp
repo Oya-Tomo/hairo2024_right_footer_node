@@ -6,6 +6,8 @@
 #include "features/flipper/flipper.h"
 #include "features/ticker/ticker.h"
 
+#define DEBUG
+
 void irq_callback_register(uint gpio, uint32_t events)
 {
     drive_callback_register(gpio, events);
@@ -27,7 +29,6 @@ void setup()
 void task()
 {
     system_state_t system_state = get_system_state();
-
     if (system_state.is_running)
     {
         drive_task();
@@ -37,6 +38,14 @@ void task()
     {
         drive_stop();
     }
+
+#ifdef DEBUG
+    drive_state_t drive_state = get_drive_state();
+    flipper_state_t flipper_state = get_flipper_state();
+
+    stdio_printf("Drive: %f | ", drive_state.speed);
+    stdio_printf("Flipper: %f %f\n", flipper_state.front_angle, flipper_state.back_angle);
+#endif
 }
 
 int main()
