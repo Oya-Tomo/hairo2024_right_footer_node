@@ -24,6 +24,10 @@ void setup()
 
     gpio_set_irq_callback(irq_callback_register);
     irq_set_enabled(IO_IRQ_BANK0, true);
+
+    gpio_init(PICO_DEFAULT_LED_PIN);
+    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
+    gpio_put(PICO_DEFAULT_LED_PIN, 1);
 }
 
 void task()
