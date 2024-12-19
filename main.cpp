@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "pico/stdlib.h"
 
 #include "features/connection/connection.h"
