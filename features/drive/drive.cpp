@@ -7,7 +7,7 @@
 
 #include "sclp/sclp.h"
 
-constexpr double MAX_RPS = 1 * 71 * (2 * M_PI); // tire * gear * 2PI
+constexpr double MAX_RPS = 2 * (2 * M_PI); // tire * gear * 2PI
 
 MotorDriver3Pins center_belt_motor(0, 1);
 MotorDriver3Pins::config_t center_belt_motor_config = {
@@ -20,20 +20,20 @@ MotorDriver3Pins front_belt_motor(2, 3);
 MotorDriver3Pins::config_t front_belt_motor_config = {
     .pwm_clkdiv = pwm_clkdiv_calc(10 * 1000, 1000),
     .pwm_wrap = 1000,
-    .reverse = false,
+    .reverse = true,
 };
 
 MotorDriver3Pins back_belt_motor(4, 5);
 MotorDriver3Pins::config_t back_belt_motor_config = {
     .pwm_clkdiv = pwm_clkdiv_calc(10 * 1000, 1000),
     .pwm_wrap = 1000,
-    .reverse = false,
+    .reverse = true,
 };
 
 QEI center_belt_qei(10, 11);
 QEI::config_t center_belt_qei_config = {
     .ppr = 48,
-    .reverse = false,
+    .reverse = true,
 };
 
 QEI front_belt_qei(12, 13);
@@ -121,45 +121,48 @@ void drive_task()
 
 void set_center_belt_speed(double speed)
 {
+    constexpr double max_motor_rps = MAX_RPS * (1.0 / 17.0);
     static float center_belt_duty_ratio = 0.0;
     /// motor duty state
 
-    double target_rps = MAX_RPS * speed;
+    double target_rps = max_motor_rps * speed;
     double current_rps = center_belt_qei.get_radians() / get_dt();
 
     center_belt_duty_ratio = guard(
         center_belt_duty_ratio +
             center_belt_pid.calculate(target_rps, current_rps, get_dt()),
-        1.0, -1.0);
+        -1.0, 1.0);
     center_belt_motor.set_duty_ratio(center_belt_duty_ratio);
 }
 
 void set_front_belt_speed(double speed)
 {
+    constexpr double max_motor_rps = MAX_RPS * (1.0 / 71.0) * (19.0 / 30.0);
     static float front_belt_duty_ratio = 0.0;
     /// motor duty state
 
-    double target_rps = MAX_RPS * speed;
+    double target_rps = max_motor_rps * speed;
     double current_rps = front_belt_qei.get_radians() / get_dt();
 
     front_belt_duty_ratio = guard(
         front_belt_duty_ratio +
             front_belt_pid.calculate(target_rps, current_rps, get_dt()),
-        1.0, -1.0);
+        -1.0, 1.0);
     front_belt_motor.set_duty_ratio(front_belt_duty_ratio);
 }
 
 void set_back_belt_speed(double speed)
 {
+    constexpr double max_motor_rps = MAX_RPS * (1.0 / 71.0) * (19.0 / 30.0);
     static float back_belt_duty_ratio = 0.0;
     /// motor duty state
 
-    double target_rps = MAX_RPS * speed;
+    double target_rps = max_motor_rps * speed;
     double current_rps = back_belt_qei.get_radians() / get_dt();
 
     back_belt_duty_ratio = guard(
         back_belt_duty_ratio +
             back_belt_pid.calculate(target_rps, current_rps, get_dt()),
-        1.0, -1.0);
+        -1.0, 1.0);
     back_belt_motor.set_duty_ratio(back_belt_duty_ratio);
 }
