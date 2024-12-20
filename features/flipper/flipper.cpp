@@ -87,7 +87,7 @@ void set_front_flipper_angle(double angle)
     // motor duty state
 
     double target_angle = angle;
-    double current_angle = front_flipper_qei.get_radians();
+    double current_angle = front_flipper_qei.get_radians() / 71.0;
 
     front_flipper_duty_ratio = front_flipper_pid.calculate(target_angle, current_angle, get_dt());
     front_flipper_motor.set_duty_ratio(front_flipper_duty_ratio);
@@ -99,7 +99,7 @@ void set_back_flipper_angle(double angle)
     // motor duty state
 
     double target_angle = angle;
-    double current_angle = back_flipper_qei.get_radians();
+    double current_angle = back_flipper_qei.get_radians() / 71.0;
 
     back_flipper_duty_ratio = back_flipper_pid.calculate(target_angle, current_angle, get_dt());
     back_flipper_motor.set_duty_ratio(back_flipper_duty_ratio);
